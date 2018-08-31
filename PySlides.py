@@ -67,9 +67,9 @@ def loadPresentation(folder):
 			place = header.readline().rstrip('\n')
 			title = subject + ' '*(129-3-3-len(subject)-len(place)) + place
 		slides = []
-		for file in os.listdir('./'+folder):
+		for file in os.listdir(folder):
 			if re.search('\d+\.txt',file):
-				slides.append('./'+folder+'/'+file)
+				slides.append(folder+'/'+file)
 		if slides == []:
 			print('No slides found!! Exiting...')
 			exit(1)
