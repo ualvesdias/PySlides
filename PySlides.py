@@ -9,7 +9,7 @@ import re
 def slideFrame(slide, title, slideNum, lenslides):
 	global frameColor, reset
 	currtime = '{0:%Y-%m-%d %H:%M:%S}'.format(datetime.datetime.now())
-	footnote = 'Slide Number: ' + str(slideNum) + '/' + str(lenslides) + ' '*(115-4-4-len(str(slideNum))-len(currtime)) + currtime
+	footnote = 'Slide Number: ' + str(slideNum) + '/' + str(lenslides) + ' '*(116-4-4-len(str(slideNum))-len(currtime)-len(str(lenslides))) + currtime
 	print(frameColor + '#'*130 + '\n##'+' '*126+'##\n##  ' + reset + title + frameColor + ' ##\n##'+' '*126+'##\n' + '#'*130 + '\n##' + reset + ' '*126 + frameColor + '##' + reset)
 	lines = slide.split('\n')
 	for line in range(len(lines)):
@@ -18,8 +18,8 @@ def slideFrame(slide, title, slideNum, lenslides):
 		print(frameColor + '##' + reset + ' '*126 + frameColor + '##' + reset)
 	print(frameColor + '#'*130 + '\n##'+' '*126+'##\n##  ' + reset + footnote + frameColor + ' ##\n##'+' '*126+'##\n' + '#'*130 + reset)
 
-def slide(slideFile):
-	with open(slideFile, 'r') as file:
+def slide(slideFile, folder):
+	with open(folder+'/'+slideFile+'.txt', 'r') as file:
 		return file.read()
 
 def controls(currentslide, lenslides):
@@ -69,7 +69,7 @@ def loadPresentation(folder):
 		slides = []
 		for file in os.listdir(folder):
 			if re.search('\d+\.txt',file):
-				slides.append(folder+'/'+file)
+				slides.append(file[:-4])
 		if slides == []:
 			print('No slides found!! Exiting...')
 			exit(1)
@@ -77,7 +77,7 @@ def loadPresentation(folder):
 		print('The folder you specified was not found.')
 		exit(1)
 
-	return title, sorted(slides), len(slides)
+	return title, sorted(slides, key=lambda x: float(x)), len(slides)
 
 def main():
 	global frameColor, reset
@@ -95,7 +95,7 @@ def main():
 
 	while True:
 		os.system('clear')
-		slideFrame(slide(slides[currentslide-1]), title, currentslide, lenslides)
+		slideFrame(slide(slides[currentslide-1], args.folder), title, currentslide, lenslides)
 		currentslide = controls(currentslide, lenslides)
 
 
