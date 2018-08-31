@@ -6,7 +6,15 @@ python3
 colored: pip3 install colored  
 
 # Usage:
- PySlides.py [-h] [-b BG] [-f FG] folder  
+PySlides.py [-h] [-b BG] [-f FG] folder  
+  
+positional arguments:  
+  folder          The folder in which the presentation is.  
+  
+optional arguments:  
+  -h, --help      show this help message and exit  
+  -b BG, --bg BG  Background color of the presentation frame.  
+  -f FG, --fg FG  Foreground color of the presentation frame.  
   
 Create a folder for each different presentation and put them in the same folder as PySlide.py.  
 Create a headers.txt file containing two lines: One for the presentation name and the other for any small secondary information that will compose the Title of the presentation.  
